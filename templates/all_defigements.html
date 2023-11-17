@@ -1,0 +1,80 @@
+<!-- templates/all_defigements.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tous les Défigements</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href=
+"https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" />
+
+    <!-- Bootstrap Font Icon CSS -->
+    <link rel="stylesheet" href=
+"https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" />
+
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/">Ajouter un Défigement</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/all">Tous les Défigements</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container mt-5">
+        <h1>Tous les Défigements</h1>
+        <ul class="list-group mt-3">
+            {% for defigement in ordered_defigements %}
+                <li class="list-group-item">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <p>{{ defigement[1].text }}</p>
+                            <p>Count: <span id="count_{{ defigement[0] }}">{{ defigement[1].count }}</span></p>
+                        </div>
+                        <div>
+                            <button type="button" onclick="rateDefigement({{ defigement[0] }}, true)" class="btn btn-success"><i class="bi bi-hand-thumbs-up"></i></button>
+                            <button type="button" onclick="rateDefigement({{ defigement[0] }}, false)" class="btn btn-danger"><i class="bi bi-hand-thumbs-down"></i></button>
+                        </div>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+        <a href="/" class="btn btn-secondary mt-3">Retour</a>
+    </div>
+
+    <script>
+        async function rateDefigement(defigementId, good) {
+            try {
+                const response = await fetch(`/rate_defigement/${defigementId}/${good}`, {
+                    method: 'POST',
+                });
+
+                if (response.ok) {
+                    // Mettez à jour le count dans le DOM
+                    const countElement = document.getElementById(`count_${defigementId}`);
+                    countElement.textContent = parseInt(countElement.textContent) + (good ? 1 : -1);
+                } else {
+                    console.error('Échec de la requête AJAX');
+                }
+            } catch (error) {
+                console.error('Erreur lors de l\'envoi de la requête AJAX', error);
+            }
+        }
+    </script>
+
+    <!-- Bootstrap JS and Popper.js (Required for Bootstrap) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
