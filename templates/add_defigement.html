@@ -10,9 +10,9 @@
 </head>
 <body>
     {% include 'menu.html' %}
-    <div class="container mt-5">
+    <div class="container mt-5" style="position: relative">
         <h5>Défigez le figement suivant :</h5>
-        <h4>« {{ defigement.text }} »</h4>
+        <a href="/all?figement_id={{defigement.id}}"> <h4>« {{ defigement.text }} »</h4></a>
         <form id="addDefigementForm" class="mt-3">
             <div class="form-group">
                 <input type="text" name="defigement_str" class="form-control" required>
@@ -20,28 +20,21 @@
             <input type="hidden" name="figement_id" value="{{ defigement.id }}">
             <button type="button" onclick="addDefigement()" class="btn btn-primary">Ajouter</button>
         </form>
-
-        <!-- Bootstrap Success Popup -->
-        <div class="modal fade" id="successPopup" tabindex="-1" role="dialog" aria-labelledby="successPopupLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="successPopupLabel">Succès</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        Le défigement a été ajouté avec succès !
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-                    </div>
+        <div aria-live="polite" aria-atomic="true" style="position: relative; min-height: 200px;">
+           <div id="successToast" class="toast" style="position: absolute; top: 0; right: 0;" role="alert" aria-live="assertive" aria-atomic="true" data-delay="5000">
+                <div class="toast-header">
+                    <strong class="mr-auto">Succès</strong>
+                    <small>À l'instant</small>
+                    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="toast-body">
+                    Défigement ajouté avec succès!
                 </div>
             </div>
         </div>
     </div>
-
     <script>
         async function addDefigement() {
             const form = document.getElementById('addDefigementForm');
@@ -58,7 +51,8 @@
 
                 if (response.ok) {
                     // Afficher la popup de succès
-                    $('#successPopup').modal('show');
+                    const successToast = new bootstrap.Toast(document.getElementById('successToast'));
+                    successToast.show();
                     // Réinitialiser le champ de texte après l'ajout réussi
                     form.reset();
                 } else {

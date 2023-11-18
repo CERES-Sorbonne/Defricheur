@@ -6,7 +6,6 @@ import random
 FIGEMENTS = os.path.join(os.path.dirname(__file__), 'data', "expressions.json")
 DEFIGEMENTS = os.path.join(os.path.dirname(__file__), 'data', "defigements.json")
 USERS = os.path.join(os.path.dirname(__file__), 'data', "users.json")
-all_defigements = {}
 
 
 def init_files():
@@ -41,7 +40,7 @@ def get_defigements() -> dict[str, dict]:
 def save_defigements(defigements):
     global all_defigements
     with open(DEFIGEMENTS, 'w', encoding='utf-8') as f:
-        json.dump(defigements, f)
+        json.dump(defigements, f, indent=4)
         all_defigements = defigements
 
 def save_users(users):
@@ -65,6 +64,7 @@ def add_defigement(figement_id: int, defigement_str: str, user_id: int):
 
 def change_count_defigement(defigement_id: int, good: bool, user_id: int):
     incr = 1 if good else -1
+    user_id = str(user_id)
     defigements = get_defigements()
     defigement = defigements[str(defigement_id)]
     if user_id in defigement['upvoted']:
@@ -72,10 +72,14 @@ def change_count_defigement(defigement_id: int, good: bool, user_id: int):
         if defigement['upvoted'][user_id] == incr:
             incr = -defigement['upvoted'][user_id]
             del defigements[str(defigement_id)]['upvoted'][user_id]
+        else:
+            defigements[str(defigement_id)]['upvoted'][user_id] = incr
+            incr *= 2
     else:
         defigements[str(defigement_id)]['upvoted'][user_id] = incr
     defigements[str(defigement_id)]['count'] += incr
     save_defigements(defigements)
+    return defigements[str(defigement_id)]['count']
 
 
 def get_random_figement():
@@ -83,6 +87,40 @@ def get_random_figement():
     chosen_id = random.choice(list(figements.keys()))
     return {'id': chosen_id, 'text': figements[chosen_id]}
 
-def get_ordered_defigements():
-    defigements = get_defigements()
+
+def get_ordered_defigements(figement_id):
+    defigements = all_defigements
+    if figement_id is not None:
+        defigements = {k: d for k, d in defigements.items() if d['figement_id'] == figement_id}
     return sorted(defigements.items(), key=lambda x: x[1]["count"], reverse=True)
+
+
+def get_user_from_id(id: int, users):
+    for user in users.values():
+        if user['id'] == id:
+            return user['username']
+
+
+def get_user_scores() -> list[dict]:
+    defigements = all_defigements
+    user_scores = {}
+    users = get_users()
+    # Parcourir tous les défigements
+    for defigement in defigements.values():
+        user_id = defigement.get("user")
+        count = defigement.get("count", 0)
+
+        # Mettre à jour le score de l'utilisateur
+        if user_id is not None:
+            user_scores[user_id] = user_scores.get(user_id, 0) + count
+
+    # Trier les utilisateurs par score cumulé
+    sorted_user_scores = sorted(user_scores.items(), key=lambda x: x[1], reverse=True)
+
+    # Créer la liste résultante
+    result = [{"user": get_user_from_id(user_id, users), "score": score} for user_id, score in sorted_user_scores]
+
+    return result
+
+
+all_defigements = get_defigements()

@@ -1,12 +1,13 @@
 # main.py
 from datetime import timedelta
-from typing import Annotated
+from typing import Annotated, Optional
 
-from fastapi import FastAPI, Request, Form, Depends, HTTPException
+from fastapi import FastAPI, Request, Form, Depends, HTTPException, Query
 from fastapi.responses import HTMLResponse
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from fastapi.templating import Jinja2Templates
-from data import init_files, get_random_figement, add_defigement, change_count_defigement, get_ordered_defigements
+from data import init_files, get_random_figement, add_defigement, change_count_defigement, get_ordered_defigements, \
+    get_figements, get_user_scores
 from users import UserInDB, get_user, Token, authenticate_user, CRED_EXCEPTION, \
     ACCESS_TOKEN_EXPIRE_MINUTES, create_access_token, get_current_user, User, validate_user, create_user
 
@@ -36,17 +37,27 @@ async def create_defigement(current_user: Annotated[User, Depends(get_current_us
 # Route pour évaluer un défigement
 @app.post("/rate_defigement/{defigement_id}/{good}")
 async def rate_defigement(current_user: Annotated[User, Depends(get_current_user)], defigement_id: int, good: bool):
-    change_count_defigement(defigement_id, good, current_user.id)
-    return {"message": "Le défigement a été évalué avec succès"}
+    newCount = change_count_defigement(defigement_id, good, current_user.id)
+    return {'count': newCount}
 
 
 # Route pour afficher tous les défigements triés par count
 @app.get("/all", response_class=HTMLResponse)
-async def read_all_defigements(request: Request):
-    ordered_defigements = get_ordered_defigements()
+async def read_all_defigements(request: Request, figement_id: Optional[int] = Query(None)):
+    ordered_defigements = get_ordered_defigements(figement_id)
+    figements = get_figements()
     return templates.TemplateResponse(
         "all_defigements.html",
-        {"request": request, "ordered_defigements": ordered_defigements},
+        {"request": request, "ordered_defigements": ordered_defigements, "figement_id": str(figement_id), "figements": figements},
+    )
+
+# Route pour afficher tous les défigements triés par count
+@app.get("/users_ranking", response_class=HTMLResponse)
+async def read_all_defigements(request: Request):
+    ordered_users = get_user_scores()
+    return templates.TemplateResponse(
+        "users.html",
+        {"request": request, "users": ordered_users},
     )
 
 
@@ -66,3 +77,4 @@ async def signup(form_data: Annotated[OAuth2PasswordRequestForm, Depends()]):
 @app.post('/users/me')
 async def get_user_me(current_user: Annotated[User, Depends(get_current_user)]):
     return current_user
+

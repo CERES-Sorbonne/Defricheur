@@ -12,6 +12,9 @@
             <li class="nav-item">
                 <a class="nav-link" href="/all">Tous les Défigements</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/users_ranking">Classement</a>
+            </li>
         </ul>
     </div>
     <div class="navbar-nav ml-auto">
@@ -75,6 +78,10 @@
 </div>
 
 <script>
+    const username = localStorage.getItem('userName')
+    if(username){
+        updateNavBar(username)
+    }
     async function makeRequest(mode) {
         const formData = new FormData(document.getElementById(mode + 'Form'));
 
@@ -89,6 +96,10 @@
 
                 // Stocker le JSON résultant de la requête dans les cookies
                 document.cookie = `userToken=${jsonResponse.access_token}; path=/`;
+                localStorage.setItem("userId", jsonResponse.userId);
+                localStorage.setItem("userName", jsonResponse.username);
+                // On supprime le username du storage une fois que le token a expiré
+                setTimeout(() => localStorage.removeItem("userName"), 30 * 60 * 1000)
                 updateNavBar(jsonResponse.username)
                 // Fermer la modale
                 $('#' + mode + 'Modal').modal('hide');
@@ -102,6 +113,6 @@
     function updateNavBar(username) {
         // Remplacer les boutons de connexion et d'inscription par le nom d'utilisateur
         const navBar = document.querySelector('.navbar-nav.ml-auto');
-        navBar.innerHTML = `<span class="navbar-text">Bienvenue, ${username}!</span>`;
+        navBar.innerHTML = `<span class="navbar-text" style="margin-right: 3em">Bienvenue, ${username}!</span>`;
     }
 </script>
