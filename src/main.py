@@ -82,6 +82,16 @@ async def login(response: Response, form_data: Annotated[OAuth2PasswordRequestFo
     return {'username': user.username, **res}
 
 
+@app.post('/logout')
+async def logout(request: Request, response: Response, current_user: Annotated[User, Depends(get_current_user)]):
+    response = templates.TemplateResponse(
+        "home.html",
+        {"request": request},
+    )
+    response.delete_cookie('access-token', httponly=True)
+    return response
+
+
 @app.post("/signup")
 async def signup(response: Response, form_data: Annotated[OAuth2PasswordRequestForm, Depends()]):
     user = create_user(form_data.username, form_data.password)
@@ -134,16 +144,6 @@ async def isTutoDone(
         current_user: Annotated[User, Depends(get_current_user)]
 ):
     return isTutoDoneBack(current_user)
-
-
-@app.post('/logout')
-async def logout(request: Request, response: Response, current_user: Annotated[User, Depends(get_current_user)]):
-    response = templates.TemplateResponse(
-        "home.html",
-        {"request": request},
-    )
-    response.delete_cookie('access-token')
-    return response
 
 
 if __name__ == "__main__":
