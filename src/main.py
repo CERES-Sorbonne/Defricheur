@@ -4,6 +4,7 @@ from fastapi import Depends, HTTPException, FastAPI, Request, Query
 from fastapi.responses import HTMLResponse, Response
 from fastapi.security import OAuth2PasswordRequestForm
 from fastapi.templating import Jinja2Templates
+from starlette.middleware.cors import CORSMiddleware
 from starlette.responses import JSONResponse
 from starlette.staticfiles import StaticFiles
 
@@ -12,6 +13,22 @@ from .data import getData, saveAnnotation, createUserFile, goNextGoPrevious, tab
 from .users import authenticate_user, get_current_user, User, validate_user, create_user, UserInDB
 
 app = FastAPI()
+
+origins = [
+    "http://defricheur.marceau-h.fr",
+    "https://defricheur.marceau-h.fr",
+    "http://192.168.2.2",
+    "https://192.168.2.2",
+    ]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 templates = Jinja2Templates(directory="templates")
 
 app.mount("/badges", StaticFiles(directory="data/badges"), name="badges")
