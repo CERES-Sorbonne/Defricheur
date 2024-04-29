@@ -1,0 +1,35 @@
+<!-- templates/annotate.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>À propos</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="/static/script.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    {% include 'menu.html' %}
+    <div class="container p-3 wrapper block fixed" style="position: relative">
+    <div>
+        <h1>À propos du Défricheur</h1>
+        <p>Le Défricheur est un jeu à but participatif gratuit et sans engagement, créé dans le cadre de la thèse de  <a href="https://julienbez.github.io/">Julien Bezançon</a>. En y jouant, vous nous aidez à annoter un large corpus de tweets. Notre objectif est d'observer les variations pouvant affecter des expressions du français. </p>
+        <p>Plusieurs personnes ont participé à la création de ce jeu :</p>
+        <ul>
+            <li><a href="https://julienbez.github.io/">Julien Bezançon</a> : design de la tâche et backend ;</li>
+            <li><a href="https://ceres.sorbonne-universite.fr/membres/02_alie_felix/">Félix Alié</a> : création des badges et frontend ;</li>
+            <li><a href="https://ceres.sorbonne-universite.fr/membres/hernandez_marceau/">Marceau Hernandez</a> : hébergement en ligne et tests ;</li>
+        </ul> 
+        <p>Nous remercions également <a href="https://members.loria.fr/KFort/">Karën Fort</a> pour ses suggestions, notamment l'ajout de badges à collectionner, mais aussi <a href="https://lettres.sorbonne-universite.fr/personnes/gilles-siouffi">Gilles Siouffi</a>, <a href="https://fr.linkedin.com/in/antoinegautier">Antoine Gautier</a> et <a href="https://www.lejeunegael.fr/">Gaël Lejeune</a> pour leurs divers retours.</p> 
+        <p> Pour toute remarque ou commentaire, vous pouvez nous contacter à l'adresse suivante : <a href="mailto:julienbezancon@gmail.com">julienbezancon@gmail.com</a> </p>
+    </div>
+    </div>
+
+    <!-- Bootstrap JS and Popper.js (Required for Bootstrap) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

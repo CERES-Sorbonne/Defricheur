@@ -1,0 +1,53 @@
+<!-- templates/user_scores.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classement des Utilisateurs</title>
+        <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href=
+"https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" />
+
+    <!-- Bootstrap Font Icon CSS -->
+<!--    <link rel="stylesheet" href=-->
+<!--"https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" />-->
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="/static/script.js"></script>
+</head>
+<body>
+    <!-- Importer la barre de navigation -->
+    {% include 'menu.html' %}
+    <div class="container mt-5">
+        <h2>Classement des Utilisateurs</h2>
+        <div class="block fixed"/>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Score <i class="bi bi-trophy text-warning"></i> </th>
+                    <th>Badges</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr {% if user.id == current_user_id %}class="table-primary"{% endif %}>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.score }}</td>
+                    <td>
+                        {% for badge_id in user.badges %}
+                            <img src="/badges/{{ badge_id }}.png" alt="Badge {{ badge_id }}" class="icone" size="10em">
+                        {% endfor %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

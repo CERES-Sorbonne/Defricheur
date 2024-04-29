@@ -1,0 +1,86 @@
+body {
+    --dot-bg: #df6559;
+    --dot-color: #df6559;
+    --dot-size: 0px;
+    --dot-space: 22px;
+    background: linear-gradient(90deg, var(--dot-bg) calc(var(--dot-space) - var(--dot-size)), transparent 1%) center / var(--dot-space) var(--dot-space), linear-gradient(var(--dot-bg) calc(var(--dot-space) - var(--dot-size)), transparent 1%) center / var(--dot-space) var(--dot-space), var(--dot-color);
+}
+
+#expression {
+    --background: linear-gradient(90deg, #FBA69E 0%, #FFF 0%);
+}
+
+#expression:before {
+    background: var(--background)
+}
+
+.correction {
+    display: none;
+}
+
+.correction-container {
+    border-radius: 10px;
+    border: 10px #74992e;
+    padding: 10px;
+    background-color: #f8d7da;
+}
+
+.success {
+    border-color: #28a745;
+    background-color: #d4edda;
+}
+
+.danger {
+    border-color: #dc3545;
+    background-color: #f8d7da;
+}
+
+.button-modal {
+    color: coral;
+    width: 50%;
+}
+
+.modal-button-daddy {
+    display: flex;
+    justify-content: center;
+}
+
+.myQuote {
+    font-size: xx-large;
+    margin: 0.4rem;
+    font-family: ti;
+}
+
+button.block {
+    display: inline-block !important;
+}
+
+button.block::before {
+    background-color: #fffbe5
+}
+
+.container {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    display: block !important;
+}
+
+.customTest {
+    width: 70%;
+    background-color: #74992e;
+    color: rgb(0, 255, 0);
+}
+
+.icone {
+    max-width: 50px;
+    max-height: 50px;
+}
+
+button.secondary {
+    background-color: #f8d7da;
+}
+
+.quote {
+    font-style: italic;
+    color: #db746b;
+}

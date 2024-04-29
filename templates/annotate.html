@@ -1,0 +1,124 @@
+<!-- templates/annotate.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Annotation</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="/static/script.js"></script>
+    <script src="/static/annotate.js"></script>
+</head>
+
+<body>
+{% include 'menu.html' %}
+
+<!-- Modals -->
+<div class="modal fade" id="tutoModal" tabindex="-1" role="dialog" aria-labelledby="tutoModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="tutoModalLabel"><b>Message à l'attention du personnel !</b></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modal-body">
+                <p>Sauf erreur de notre part, c'est votre première journée de travail au sein du Défricheur. Nous vous
+                    proposons donc une formation afin de vous familiariser avec votre mission. Essayez d'identifier
+                    correctement les expressions recherchées et les messages codés dans les 20 prochains tweets.</p>
+                <p><b>Attention : vous devez annoter tous ces tweets avant de pouvoir accéder à votre mission !</b></p>
+            </div>
+
+            <div class="modal-button-daddy">
+                <button type="button" onclick="close_modal('#tutoModal')" class="block answer button-modal">OK
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="cPasFini" tabindex="-1" role="dialog" aria-labelledby="cPasFiniLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="cPasFiniLabel"><b>Message à l'attention du personnel !</b></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modal-body">
+                <p> Attention ! Avant d'accéder à votre mission, veuillez terminer votre formation en annotant les
+                    expressions recherchées et les messages codés dans les 20 tweets précédents. </p>
+                <p><b>Note de la direction: si vous voyez ce message, c'est que vous avez oublié d'annoter un tweet.
+                    Veillez à répondre aux 2 questions proposées pour chaque tweet.</b></p>
+            </div>
+
+            <div class="modal-button-daddy">
+                <button type="button" onclick="close_modal('#cPasFini')" class="block answer button-modal">OK
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Main content -->
+
+<div id="expression" class="container p-3 mt-5 wrapper block fixed">
+    <h5><b>Expression recherchée : </b>"<span id="seed_text"></span>"<span style="float:right"><span
+            id="shown_tweet_id"></span>/<span id="total_block"></span></span></h5>
+</div>
+<div class="container p-3 wrapper block fixed" style="position: relative">
+    <blockquote class="blockquote">
+        <p class="mb-0>"><i class="myQuote">«</i><span id="tweet_text"></span><i class="myQuote">»</i></p>
+        <footer class="blockquote-footer">Source <cite title="Source Title">Twitter</cite></footer>
+    </blockquote>
+    <hr style="border-top: dotted 3px;margin-top:1em;margin-bottom:1em"/>
+    <div class="container" style="text-align: center;margin: auto">
+        <h5 class="mt-3"> Pouvez-vous identifier dans ce tweet l'expression recherchée ? </h5>
+        <form id="addDefigementForm2">
+            <input type="hidden" name="figement_id">
+            <button id="3" type="button" onclick="answer(1, 'MWE_recognized', this.id)"
+                    class="block answer MWE_recognized" name="1">Oui [A]
+            </button>
+            <button id="4" type="button" onclick="answer(0, 'MWE_recognized', this.id)"
+                    class="block answer MWE_recognized" name="0">Non [Z]
+            </button>
+            <button id="5" type="button" onclick="answer(2, 'MWE_recognized', this.id)"
+                    class="block answer MWE_recognized" name="2">Je ne sais pas [E]
+            </button>
+        </form>
+        <h5 class="mt-3"> Cette expression contient-elle un message codé ? </h5>
+        <form id="addDefigementForm">
+            <input type="hidden" name="figement_id">
+            <button id="0" type="button" onclick="answer(1, 'UMWE_identified', this.id)"
+                    class="block answer UMWE_identified" name="1">Oui [Q]
+            </button>
+            <button id="1" type="button" onclick="answer(0, 'UMWE_identified', this.id)"
+                    class="block answer UMWE_identified" name="0">Non [S]
+            </button>
+            <button id="2" type="button" onclick="answer(2, 'UMWE_identified', this.id)"
+                    class="block answer UMWE_identified" name="2">Je ne sais pas [D]
+            </button>
+        </form>
+
+        <div class="mt-5 correction-container correction" id="correction-container" style="display: none">
+            <h5 id="bonne-reponse" class="correction"> Correct ! </h5>
+            <h5 id="mauvaise-reponse" class="correction"> Incorrect ! </h5>
+
+            <p class="mt-3 correction-message correction" id="correction-message"></p>
+            <p class="mt-3 correction-message correction" id="correction-precisions"></p>
+
+        </div>
+
+        <div class="mt-5">
+            <button id="precedent" class="block round" style="width:25%" onclick="onChange(-1)">&lt; Précédent</button>
+            <button id="suivant" class="block round" style="width:25%" onclick="onChange(1)">Suivant &gt;</button>
+        </div>
+        <!--            <div id="toastContainer" style="position: fixed; bottom: 20px; right: 20px; z-index: 9999;"></div>-->
+    </div>
+</div>
+</body>
+</html>

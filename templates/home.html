@@ -1,0 +1,35 @@
+<!-- templates/annotate.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accueil</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="/static/script.js"></script>
+</head>
+<body>
+    {% include 'menu.html' %}
+    <div class="container p-3 wrapper block fixed" style="position: relative">
+    <div>
+        <h1> Bienvenue sur le service du Défricheur ... </h1>
+        <p> Bienvenue sur le service du Défricheur. Votre travail, si vous l'acceptez, est de nous aider à identifier des messages codés. En effet, les membres de la P.P.A (Petis Plaisantins Anonymes) se jouent de nous et s'amusent à communiquer entre eux en déformant des expressions sur Twitter. Vous acceptez ? Super, signez là ! Maintenant, votre but est simple : identifier les tweets véhiculant les messages codés de la P.P.A. </p>
+        <h2> Consignes </h2>
+        <p> C'est votre première journée au service du Défricheur, n'est-ce pas ? Pas de problème, revoyons les bases ensemble ... Commençons par les expressions. Vous en avez sûrement déjà vu. Comment ça, non ? Bon, voici quelques exemples : </p>
+        <ul>
+            <li> Une expression peut être un proverbe : <span class="quote">Tout vient à point à qui sait attendre</span> </li>
+            <li> Mais une expression peut aussi être un mot composé : <span class="quote">Tour de table</span> </li>
+            <li> Autre exemple, une expression peut être un titre : <span class="quote">Maman, j'ai raté l'avion !</span> </li>
+        </ul>  
+        <p> Voilà, c'est plus clair pour vous ? De toute manière, ce n'est pas bien important, on vous indiquera les expressions à rechercher. Comme on est gentils, on vous a aussi dégoté quelques tweets écrits par les membres de la P.P.A : </p>
+        <ul>
+            <li> Bien sûr, Jean-Marc, bien sûr. <span class="quote">Tout sèche à point pour qui sait étendre</span> ! </li>
+            <li> C'est cela oui, faisons un <span class="quote">demi-tour de table</span>. </li>
+            <li> <span class="quote">Macron, j'ai raté ma réforme !</span> </li>
+        </ul> 
+        <p> Vous les avez ? Parfait ! C'est à vous de jouer maintenant : inscrivez-vous et cliquez sur l'onglet <a href="/annotate">Annotation</a> pour commencer ! Plus vous avancez dans votre tâche, plus vous collectez de points et de badges. Vous pouvez voir la progression de tous les participants dans l'onglet <a href="/ranking">Classement</a>. </p>
+    </div>
+    </div>
+</body>
+</html>
