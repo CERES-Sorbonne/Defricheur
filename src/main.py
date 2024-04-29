@@ -20,10 +20,15 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 
 @app.get('/', response_class=HTMLResponse)
 async def root(request: Request):
-    return templates.TemplateResponse(
+    response = templates.TemplateResponse(
         "home.html",
         {"request": request}
     )
+    response.headers["Cache-Control"] = "no-cache, no-store"
+    response.headers["Pragma"] = "no-cache"
+    response.headers["Expires"] = "0"
+    response.headers["CDN-Cache-Control"] = "no-cache, no-store"
+    return response
 
 
 @app.get('/informations', response_class=HTMLResponse)
@@ -113,7 +118,6 @@ async def get_secret(
 ):
     userData = getUserData(current_user, dataType="score")
 
-
     if q == 'k0nam1':
         badges = userData.get("badges", {})
         if "konami" not in badges:
@@ -130,6 +134,7 @@ async def isTutoDone(
 ):
     return isTutoDoneBack(current_user)
 
+
 @app.post('/logout')
 async def logout(request: Request, response: Response, current_user: Annotated[User, Depends(get_current_user)]):
     response = templates.TemplateResponse(
@@ -144,4 +149,4 @@ if __name__ == "__main__":
     import uvicorn
 
     uvicorn.run(app, host="0.0.0.0", port=8000)
-    #uvicorn src.main:app --reload
+    # uvicorn src.main:app --reload
