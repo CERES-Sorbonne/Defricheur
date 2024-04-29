@@ -24,10 +24,11 @@ async def root(request: Request):
         "home.html",
         {"request": request}
     )
-    response.headers["Cache-Control"] = "no-cache, no-store"
-    response.headers["Pragma"] = "no-cache"
-    response.headers["Expires"] = "0"
-    response.headers["CDN-Cache-Control"] = "no-cache, no-store"
+    ## If you want to disable cache
+    # response.headers["Cache-Control"] = "no-cache, no-store"
+    # response.headers["Pragma"] = "no-cache"
+    # response.headers["Expires"] = "0"
+    # response.headers["CDN-Cache-Control"] = "no-cache, no-store"
     return response
 
 
