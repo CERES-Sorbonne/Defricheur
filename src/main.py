@@ -100,14 +100,15 @@ async def login(response: Response, form_data: Annotated[OAuth2PasswordRequestFo
 
 
 @app.post('/logout')
-async def logout(request: Request):
-    print("logout")
-    response = templates.TemplateResponse(
-        "home.html",
-        {"request": request},
-    )
-    response.set_cookie(key='access-token', value='', httponly=True)
-    response.delete_cookie('access-token', httponly=True)
+async def logout(response: Response):
+    # print("logout")
+    # response = templates.TemplateResponse(
+    #     "home.html",
+    #     {"request": request},
+    # )
+    # response.set_cookie(key='access-token', value='', httponly=True)
+    # response.delete_cookie('access-token', httponly=True)
+    response.set_cookie(key='access-token', value="", httponly=True, expires=0, max_age=0)
     return response
 
 
