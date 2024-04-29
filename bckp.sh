@@ -1,13 +1,13 @@
 #!/bin/bash -x
 
 # The whole directory you want to backup
-Directory="./data"
+Directory="./users"
 
 # Where the backup should be stored
 BackupDir="./backup"
 
 # The folder name inside the zip
-ZipFolderName="DefricheurData"
+ZipFolderName="DefricheurUsers"
 
 # Create the temp directory
 mkdir ./temp/
