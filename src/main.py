@@ -14,6 +14,9 @@ from .users import authenticate_user, get_current_user, User, validate_user, cre
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
 
+app.mount("/badges", StaticFiles(directory="data/badges"), name="badges")
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
 
 @app.get('/', response_class=HTMLResponse)
 async def root(request: Request):
@@ -127,9 +130,6 @@ async def isTutoDone(
 ):
     return isTutoDoneBack(current_user)
 
-
-app.mount("/badges", StaticFiles(directory="data/badges"), name="badges")
-app.mount("/static", StaticFiles(directory="templates/static"), name="static")
 
 if __name__ == "__main__":
     import uvicorn
