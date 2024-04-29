@@ -130,6 +130,11 @@ async def isTutoDone(
 ):
     return isTutoDoneBack(current_user)
 
+@app.get('/logout')
+async def logout(response: Response):
+    response.delete_cookie('access-token')
+    return {'message': 'Successfully logged out'}
+
 
 if __name__ == "__main__":
     import uvicorn

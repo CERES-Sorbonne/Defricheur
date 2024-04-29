@@ -61,8 +61,23 @@ function logout() {
     localStorage.removeItem('user'); // Remove user data from localStorage
     // Remove token from localStorage
     localStorage.removeItem('token');
+    do_logout_request();
     updateNavBar(null); // Update navigation bar to show login and signup buttons
     window.location.href = "/";
+}
+
+function do_logout_request() {
+    fetch('/logout', {
+        method: 'POST',
+    }).then(response => {
+        if (response.ok) {
+            console.log('Déconnexion réussie');
+        } else {
+            console.error('Erreur lors de la déconnexion');
+        }
+    }).catch(error => {
+        console.error('Erreur lors de la déconnexion', error);
+    });
 }
 
 function getUserName() {
