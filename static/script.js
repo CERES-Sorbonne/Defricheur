@@ -1,6 +1,9 @@
 let inModal = false;
 let userName = null;
 
+let konamiCode = '';
+const secretCode = 'ArrowUpArrowUpArrowDownArrowDownArrowLeftArrowRightArrowLeftArrowRightba'; // Code Konami en ASCII
+
 function open_modal(id) {
     inModal = true;
     $(id).modal('show');
@@ -156,9 +159,6 @@ document.querySelectorAll('.nav-link').forEach((link, index) => {
         }
     });
 });
-
-let konamiCode = '';
-const secretCode = 'ArrowUpArrowUpArrowDownArrowDownArrowLeftArrowRightArrowLeftArrowRightba'; // Code Konami en ASCII
 
 
 function showToast(id) {
