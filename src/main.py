@@ -88,6 +88,7 @@ async def logout(request: Request, response: Response, current_user: Annotated[U
         "home.html",
         {"request": request},
     )
+    response.set_cookie(key='access-token', value='', httponly=True)
     response.delete_cookie('access-token', httponly=True)
     return response
 
