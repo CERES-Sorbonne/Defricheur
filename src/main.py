@@ -101,6 +101,7 @@ async def login(response: Response, form_data: Annotated[OAuth2PasswordRequestFo
 
 @app.post('/logout')
 async def logout(request: Request):
+    print("logout")
     response = templates.TemplateResponse(
         "home.html",
         {"request": request},

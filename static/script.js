@@ -116,7 +116,7 @@ async function makeRequest(mode) {
                 expiry: now.getTime() + 120 * 60 * 1000
             }
             localStorage.setItem("user", JSON.stringify(user));
-            // On supprime le username du storage une fois que le token a expiré
+            // On supprime l' username du storage une fois que le token a expiré
             updateNavBar(jsonResponse.username)
             // Fermer la modale
             $('#' + mode + 'Modal').modal('hide');
