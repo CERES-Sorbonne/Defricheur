@@ -130,10 +130,14 @@ async def isTutoDone(
 ):
     return isTutoDoneBack(current_user)
 
-@app.get('/logout')
-async def logout(response: Response):
+@app.post('/logout')
+async def logout(request: Request, response: Response, current_user: Annotated[User, Depends(get_current_user)]):
+    response = templates.TemplateResponse(
+        "home.html",
+        {"request": request},
+    )
     response.delete_cookie('access-token')
-    return {'message': 'Successfully logged out'}
+    return response
 
 
 if __name__ == "__main__":
