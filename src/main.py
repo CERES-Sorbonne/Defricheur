@@ -4,6 +4,7 @@ from fastapi import Depends, HTTPException, FastAPI, Request, Query
 from fastapi.responses import HTMLResponse, Response
 from fastapi.security import OAuth2PasswordRequestForm
 from fastapi.templating import Jinja2Templates
+from starlette.middleware import Middleware
 from starlette.middleware.cors import CORSMiddleware
 from starlette.responses import JSONResponse
 from starlette.staticfiles import StaticFiles
@@ -12,22 +13,26 @@ from .data import getData, saveAnnotation, createUserFile, goNextGoPrevious, tab
     getUserData, isTutoDoneBack
 from .users import authenticate_user, get_current_user, User, validate_user, create_user, UserInDB
 
-app = FastAPI()
+# app = FastAPI()
 
 origins = [
     "http://defricheur.marceau-h.fr",
     "https://defricheur.marceau-h.fr",
     "http://192.168.2.2",
     "https://192.168.2.2",
-    ]
+]
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+middleware = [
+    Middleware(
+        CORSMiddleware,
+        allow_origins=origins,
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
+]
+
+app = FastAPI(middleware=middleware)
 
 templates = Jinja2Templates(directory="templates")
 
@@ -101,15 +106,8 @@ async def login(response: Response, form_data: Annotated[OAuth2PasswordRequestFo
 
 @app.post('/logout')
 async def logout(response: Response):
-    # print("logout")
-    # response = templates.TemplateResponse(
-    #     "home.html",
-    #     {"request": request},
-    # )
-    # response.set_cookie(key='access-token', value='', httponly=True)
-    # response.delete_cookie('access-token', httponly=True)
-    response.set_cookie(key='access-token', value="", httponly=True, expires=0, max_age=0)
-    return response
+    response.set_cookie(key='access-token', httponly=True, expires=0, max_age=0)
+    return {"message": "Déconnexion réussie"}  # Actually it returns the cookie
 
 
 @app.post("/signup")
@@ -169,5 +167,4 @@ async def isTutoDone(
 if __name__ == "__main__":
     import uvicorn
 
-    uvicorn.run(app, host="0.0.0.0", port=8000)
-    # uvicorn src.main:app --reload
+    uvicorn.run(app, host="0.0.0.0", port=8000)  # uvicorn src.main:app --reload
