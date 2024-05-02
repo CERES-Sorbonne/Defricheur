@@ -1,0 +1,17 @@
+.hover {
+    display: inline-block;
+}
+
+.hover-text {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 5px;
+  z-index: 1;
+}
+
+.hover:hover .hover-text {
+  display: block;
+}
