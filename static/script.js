@@ -4,14 +4,23 @@ let userName = null;
 let konamiCode = '';
 const secretCode = 'ArrowUpArrowUpArrowDownArrowDownArrowLeftArrowRightArrowLeftArrowRightba'; // Code Konami en ASCII
 
-function open_modal(id) {
+function open_modal(id, page) {
     inModal = true;
     $(id).modal('show');
+    if (page !== null) {
+        // gotoPage(page, true, false);
+        const newLocation = document.getElementById("newLocation");
+        newLocation.innerHTML = page;
+    }
 }
 
 function close_modal(id) {
     inModal = false;
     $(id).modal('hide');
+    const newLocation = document.getElementById("newLocation").innerHTML;
+    if (newLocation !== "undefined") {
+        gotoPage(newLocation, true, false);
+    }
 }
 
 window.addEventListener('keydown', async function (e) {
@@ -41,7 +50,7 @@ window.addEventListener('keydown', async function (e) {
             } else {
                 console.error('Impossible de révéler le secret.');
             }
-            konamiCode = ''; // Réinitialiser le code Konami
+            konamiCode = ""; // Réinitialiser le code Konami
         } else {
             konamiCode = ""
         }
@@ -49,12 +58,14 @@ window.addEventListener('keydown', async function (e) {
     }
 });
 
-function checkLoggedIn() {
+function checkLoggedIn(page= null, openModal = true) {
     const userName = getUserName();
     console.log(userName)
     if (!userName) {
         // Si l'utilisateur n'est pas connecté, afficher la popup de connexion
-        $('#loginModal').modal('show');
+        if (openModal) {
+            open_modal('#loginModal', page)
+        }
         return false;
     }
     return true;
@@ -67,7 +78,6 @@ function logout() {
     localStorage.removeItem('access-token');
     updateNavBar(null); // Update navigation bar to show login and signup buttons
     do_logout_request();
-    // window.location.href = "/";
 }
 
 function do_logout_request() {
@@ -76,6 +86,7 @@ function do_logout_request() {
     }).then(response => {
         if (response.ok) {
             console.log('Déconnexion réussie');
+            window.location.href = "/";
         } else {
             console.error('Erreur lors de la déconnexion');
         }
@@ -86,6 +97,7 @@ function do_logout_request() {
 
 function getUserName() {
     const userStr = localStorage.getItem('user')
+    console.log(userStr)
     if (!userStr) {
         return null
     }
@@ -120,7 +132,7 @@ async function makeRequest(mode) {
             // On supprime l' username du storage une fois que le token a expiré
             updateNavBar(jsonResponse.username)
             // Fermer la modale
-            $('#' + mode + 'Modal').modal('hide');
+            close_modal('#' + mode + 'Modal')
         } else {
             const errorMessage = await response.json();
             if (mode === 'signup') {
@@ -151,15 +163,13 @@ function updateNavBar(username) {
     }
 }
 
-document.querySelectorAll('.nav-link').forEach((link, index) => {
-    link.addEventListener('click', function (event) {
-        // Vérifier si l'utilisateur est connecté avant de suivre le lien,
-        // sauf pour le premier lien
-        if (index !== 0 && !checkLoggedIn()) {
-            event.preventDefault(); // Empêcher le lien de s'exécuter normalement
-        }
-    });
-});
+
+async function gotoPage(page, checkLogin = true, openModal = true) {
+    if (checkLogin && !checkLoggedIn(page, openModal)) {
+        return;
+    }
+    window.location = page;
+}
 
 
 function showToast(id) {
