@@ -84,3 +84,7 @@ button.secondary {
     font-style: italic;
     color: #db746b;
 }
+
+.en_gras_pour_faire_plaisir_a_julien:hover {
+    font-weight: bold;
+}
