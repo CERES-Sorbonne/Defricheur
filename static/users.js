@@ -7,12 +7,10 @@ let promise = fetch(url)
         imgs_hover = data;
     }
     );
-console.log(imgs_hover);
 
 async function isJsonLoaded() {
     return promise.then(() => {
         return true;
-
     });
 }
 
@@ -26,7 +24,7 @@ async function generateHover(img) {
         accompanyingP.innerHTML = text;
     }
     else {
-        console.log("Json not loaded yet");
+        console.log("Json not loaded , WTF !");
     }
 }
 
