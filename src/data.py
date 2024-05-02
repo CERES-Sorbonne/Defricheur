@@ -159,7 +159,7 @@ def createBlockData(alreadyAnnotated, max_size=10, max_control=5):
             block_control = []
 
     block_annotate = [{"id": k, "type": "annotation"} for k, v in tweets.items() if
-                      v["seed_id"] == block_seed and k not in alreadyAnnotated]
+                      v["seed_id"] == block_seed and k not in alreadyAnnotated and v["shadowBan"] == False]
     if len(block_annotate) > max_size - len(block_control):
         try:
             block_annotate = random.sample(block_annotate, max_size - len(block_control))
