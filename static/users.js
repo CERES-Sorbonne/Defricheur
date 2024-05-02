@@ -28,3 +28,4 @@ async function generateHover(img) {
     }
 }
 
+document.addEventListener('DOMContentLoaded', mainPageIfNotConnected);

@@ -39,6 +39,13 @@ templates = Jinja2Templates(directory="templates")
 app.mount("/badges", StaticFiles(directory="data/badges"), name="badges")
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
+@app.exception_handler(AttributeError)
+async def validation_exception_handler(request, exc):
+    return templates.TemplateResponse(
+        "home.html",
+        {"request": request}
+    )
+
 
 @app.get('/', response_class=HTMLResponse)
 async def root(request: Request):

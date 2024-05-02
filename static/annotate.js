@@ -375,3 +375,5 @@ async function do_message() {
 
     return message;
 }
+
+document.addEventListener('DOMContentLoaded', mainPageIfNotConnected);

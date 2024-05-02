@@ -202,4 +202,10 @@ function onLoaded() {
     updateNavBar(userName);
 }
 
+function mainPageIfNotConnected() {
+    if (!userName) {
+        window.location = '/';
+    }
+}
+
 document.addEventListener('DOMContentLoaded', onLoaded);
