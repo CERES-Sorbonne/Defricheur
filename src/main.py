@@ -105,10 +105,13 @@ async def login(response: Response, form_data: Annotated[OAuth2PasswordRequestFo
 
 
 @app.post('/logout')
-async def logout(response: Response):
+async def logout(response: Response, request: Request):
+    response = templates.TemplateResponse(
+        "home.html",
+        {"request": request}
+    )
     response.set_cookie(key='access-token', httponly=True, expires=0, max_age=0)
-    return {"message": "Déconnexion réussie"}  # Actually it returns the cookie
-
+    return response
 
 @app.post("/signup")
 async def signup(response: Response, form_data: Annotated[OAuth2PasswordRequestForm, Depends()]):

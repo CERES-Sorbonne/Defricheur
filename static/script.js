@@ -64,9 +64,10 @@ function logout() {
     localStorage.removeItem('user'); // Remove user data from localStorage
     // Remove token from localStorage
     localStorage.removeItem('token');
-    do_logout_request();
+    localStorage.removeItem('access-token');
     updateNavBar(null); // Update navigation bar to show login and signup buttons
-    window.location.href = "/";
+    do_logout_request();
+    // window.location.href = "/";
 }
 
 function do_logout_request() {
