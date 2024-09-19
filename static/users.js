@@ -1,5 +1,7 @@
 let imgs_hover = {};
-let url = "/static/imgs_hover.json";
+let host_div = document.getElementById('host');
+let host = host_div.textContent;
+let url = host + "/static/imgs_hover.json";
 
 let promise = fetch(url)
     .then(response => response.json())
