@@ -12,10 +12,10 @@
     <!-- Bootstrap Font Icon CSS -->
 <!--    <link rel="stylesheet" href=-->
 <!--"https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" />-->
-    <link rel="stylesheet" href={{ host + "/static/style.css"}}>
-    <link rel="stylesheet" href={{ host + "/static/hover.css"}}>
-    <script src={{ host + "/static/script.js"}}></script>
-    <script src={{ host + "/static/users.js"}} defer></script>
+    <link rel="stylesheet" href={{ host + "static/style.css"}}>
+    <link rel="stylesheet" href={{ host + "static/hover.css"}}>
+    <script src={{ host + "static/script.js"}}></script>
+    <script src={{ host + "static/users.js"}} defer></script>
 </head>
 <body>
 <div id="host" style="display: none;">{{ host }}</div>
@@ -40,7 +40,7 @@
                     <td>
                         {% for badge_id in user.badges %}
                             <div id="{{ badge_id }}" class="hover">
-                                <img src="{{ host }}/badges/{{ badge_id }}.png" alt="Badge {{ badge_id }}"
+                                <img src="{{ host }}badges/{{ badge_id }}.png" alt="Badge {{ badge_id }}"
                                      class="icone" onload="generateHover(this)"
                                 >
                                 <p class="hover-text">Ce badge reserve encore bien des mystères...</p>
