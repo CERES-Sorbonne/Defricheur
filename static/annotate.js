@@ -1,7 +1,10 @@
 let haveYouSeenTheCorrection = false;
 let dico = {}
 let changing = false;
-let host = window.location.href.replace("annotate", "").replace("//", "/");
+let host = window.location.href.replace("annotate", "")
+while (host.endsWith("/")) {
+    host = host.slice(0, -1)
+}
 
 function modifyPage(data) {
     document.querySelector('#seed_text').innerText = data.seed_text;
