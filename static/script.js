@@ -164,11 +164,10 @@ function updateNavBar(username) {
 }
 
 
-async function gotoPage(page, checkLogin = true, openModal = true) {
+async function gotoPage(page, checkLogin = true, openModal = true, host = '') {
     if (checkLogin && !checkLoggedIn(page, openModal)) {
         return;
     }
-    let host = window.location.origin;
     window.location = host + '/' + page;
 }
 
