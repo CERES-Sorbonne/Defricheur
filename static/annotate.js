@@ -1,7 +1,7 @@
 let haveYouSeenTheCorrection = false;
 let dico = {}
 let changing = false;
-let host = window.location.href.slice(0,-8);
+let host = window.location.href.replace("annotate", "").replace("//", "/");
 
 function modifyPage(data) {
     document.querySelector('#seed_text').innerText = data.seed_text;
@@ -140,7 +140,7 @@ async function answer(value, questionNumber, buttonId) {
     const buttons = form.querySelectorAll('button');
 
     try {
-        const response = await fetch('/annotate/', {
+        const response = await fetch(host + '/annotate/', {
             method: 'POST',
             credentials: 'include',
             body: JSON.stringify({
