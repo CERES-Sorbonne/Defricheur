@@ -168,7 +168,7 @@ async function gotoPage(page, checkLogin = true, openModal = true) {
     if (checkLogin && !checkLoggedIn(page, openModal)) {
         return;
     }
-    host = window.location.origin;
+    let host = window.location.origin;
     window.location = host + '/' + page;
 }
 
