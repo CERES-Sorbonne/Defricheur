@@ -52,7 +52,7 @@ window.addEventListener('keydown', async function (e) {
     if (konamiCode.length === secretCode.length) {
         if (konamiCode === secretCode) {
             // Appeler la route /secret?q=k0nam1
-            const response = await fetch('/secret?q=k0nam1')
+            const response = await fetch(host + 'secret?q=k0nam1')
             if (response.ok) {
                 const data = await response.json()
                 console.log('Secret révélé !');
