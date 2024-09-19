@@ -73,9 +73,9 @@ async function getData(order = null) {
     }
 }
 
-async function tuto_done() {
+async function tuto_done(host = "/") {
     try {
-        const response = await fetch('/isTutoDone/', {
+        const response = await fetch(host + 'isTutoDone/', {
             method: 'GET',
             credentials: 'include',
         })
@@ -90,7 +90,7 @@ async function tuto_done() {
 
 }
 
-async function onChange(order) {
+async function onChange(order, host = "/") {
     if (changing) {
         return;
     }
@@ -109,7 +109,7 @@ async function onChange(order) {
 
 
     if (block_id === 0 && tweet_id === 19 && order === 1) {
-        const tutorial_done = await tuto_done();
+        const tutorial_done = await tuto_done(host);
         if (!tutorial_done) {
             await open_modal('#cPasFini');
             changing = false;
