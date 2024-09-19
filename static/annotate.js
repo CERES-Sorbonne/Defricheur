@@ -58,7 +58,7 @@ async function getData(order = null) {
         if (dico.tweetId) {
             body.tweet_id = dico.tweetId
         }
-        const response = await fetch(host + 'data/', {
+        const response = await fetch(host + '/data/', {
             method: 'POST',
             credentials: 'include',
             body: JSON.stringify(body)
