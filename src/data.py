@@ -1,5 +1,6 @@
 import json
 import random
+import re
 from pathlib import Path
 from typing import Optional
 from filelock import FileLock
@@ -104,6 +105,11 @@ training_ids = set(training.keys())
 controls = getControlsTweets()
 controls_ids = set(controls.keys())
 
+### ANONYMIZATION ### ---------------------------------------------------
+
+def anonymize(text):
+    """anonymize a tweet by replacing every username by 'username' and every hashtag by 'hashtag'"""
+    return re.sub(r"@\w{1,15}", "@utilisateur" , text)
 
 ### USER FILES MANAGMENT ### ---------------------------------------------
 
@@ -236,7 +242,7 @@ def generateData(user_id):
     if tweet_id in training_ids:
         tweet = training[tweet_id]
         data["seed_text"] = seeds[str(tweet["seed_id"])]["content"]
-        data["tweet_text"] = tweet["tweet"]
+        data["tweet_text"] = anonymize(tweet["tweet"])
         data["MWE_recognized_correction"] = str(int(tweet["MWE_recognized"]))
         data["UMWE_identified_correction"] = str(int(tweet["UMWE_identified"]))
         data["correction"] = tweet["correction"]
@@ -245,14 +251,14 @@ def generateData(user_id):
     elif tweet_id in controls_ids:
         tweet = controls[tweet_id]
         data["seed_text"] = seeds[str(tweet["seed_id"])]["content"]
-        data["tweet_text"] = tweet["tweet"]
+        data["tweet_text"] = anonymize(tweet["tweet"])
         data["MWE_recognized_correction"] = str(int(tweet["MWE_recognized"]))
         data["UMWE_identified_correction"] = str(int(tweet["UMWE_identified"]))
         data["__type__"] = "control"
 
     else:
         data["seed_text"] = seeds[str(block["seed_id"])]["content"]
-        data["tweet_text"] = tweets[block["tweets_ids"][currentTweetId]["tweet_id"]]["tweet"]
+        data["tweet_text"] = anonymize(tweets[block["tweets_ids"][currentTweetId]["tweet_id"]]["tweet"])
         data["__type__"] = "annotation"
 
     return data
