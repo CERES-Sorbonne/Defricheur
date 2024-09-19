@@ -115,6 +115,9 @@ function getUserName() {
 async function makeRequest(mode, host) {
     const formData = new FormData(document.getElementById(mode + 'Form'));
 
+    console.log('Envoi de la requête AJAX', mode, host);
+    console.log(host + mode);
+
     try {
         const response = await fetch(host + mode, {
             method: 'POST',

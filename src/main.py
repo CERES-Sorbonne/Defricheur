@@ -34,7 +34,7 @@ middleware = [
 ]
 
 app = FastAPI(middleware=middleware)
-host = os.getenv("DEFRICHEUR_SERVER", "/")
+host = os.getenv("DEFRICHEUR_ROOT", "/")
 
 templates = Jinja2Templates(directory="templates")
 
