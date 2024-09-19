@@ -112,11 +112,11 @@ function getUserName() {
     return user.name
 }
 
-async function makeRequest(mode) {
+async function makeRequest(mode, host) {
     const formData = new FormData(document.getElementById(mode + 'Form'));
 
     try {
-        const response = await fetch('/' + mode, {
+        const response = await fetch(host + '/' + mode, {
             method: 'POST',
             body: formData,
         });
