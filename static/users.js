@@ -1,7 +1,18 @@
 let imgs_hover = {};
-let host = document.getElementById('host').innerText;
+
+// let host_ = window.location.href.replace(
+//     "annotate", ""
+// ).replace("home", ""
+// ).replace("informations", ""
+// ).replace("ranking", "")
+// while (host_.endsWith("/")) {
+//     host_ = host_.slice(0, -1)
+// }
+// const host = host_ + "/"
+
 let url = host + "/static/imgs_hover.json";
 console.log(url);
+
 
 let promise = fetch(url)
     .then(response => response.json())

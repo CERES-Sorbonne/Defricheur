@@ -1,10 +1,16 @@
 let haveYouSeenTheCorrection = false;
 let dico = {}
 let changing = false;
-let host = window.location.href.replace("annotate", "")
-while (host.endsWith("/")) {
-    host = host.slice(0, -1)
-}
+
+// let host_ = window.location.href.replace(
+//     "annotate", ""
+// ).replace("home", ""
+// ).replace("informations", ""
+// ).replace("ranking", "")
+// while (host_.endsWith("/")) {
+//     host_ = host_.slice(0, -1)
+// }
+// const host = host_ + "/"
 
 function modifyPage(data) {
     document.querySelector('#seed_text').innerText = data.seed_text;

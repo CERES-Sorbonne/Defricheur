@@ -4,14 +4,15 @@ let userName = null;
 let konamiCode = '';
 const secretCode = 'ArrowUpArrowUpArrowDownArrowDownArrowLeftArrowRightArrowLeftArrowRightba'; // Code Konami en ASCII
 
-let host = window.location.href.replace(
+let host_ = window.location.href.replace(
     "annotate", ""
 ).replace("home", ""
 ).replace("informations", ""
 ).replace("ranking", "")
-while (host.endsWith("/")) {
-    host = host.slice(0, -1)
+while (host_.endsWith("/")) {
+    host_ = host_.slice(0, -1)
 }
+const host = host_ + "/"
 
 function open_modal(id, page) {
     inModal = true;
@@ -181,6 +182,7 @@ async function gotoPage(page, checkLogin = true, openModal = true) {
         return;
     }
     console.log('Redirection vers la page', page);
+    console.log("Host : " + host);
     console.log(host + page);
     window.location = host + page;
 }
