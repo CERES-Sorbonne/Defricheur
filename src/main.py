@@ -1,3 +1,4 @@
+import os
 from typing import Annotated
 
 from fastapi import Depends, HTTPException, FastAPI, Request, Query
@@ -33,6 +34,7 @@ middleware = [
 ]
 
 app = FastAPI(middleware=middleware)
+host = os.getenv("DEFRICHEUR_SERVER", "")
 
 templates = Jinja2Templates(directory="templates")
 
@@ -43,7 +45,7 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 async def validation_exception_handler(request, exc):
     return templates.TemplateResponse(
         "home.html",
-        {"request": request}
+        {"request": request, "host": host}
     )
 
 
@@ -51,7 +53,7 @@ async def validation_exception_handler(request, exc):
 async def root(request: Request):
     response = templates.TemplateResponse(
         "home.html",
-        {"request": request}
+        {"request": request, "host": host}
     )
     ## If you want to disable cache
     # response.headers["Cache-Control"] = "no-cache, no-store"
@@ -65,7 +67,7 @@ async def root(request: Request):
 async def root(request: Request):
     return templates.TemplateResponse(
         "informations.html",
-        {"request": request}
+        {"request": request, "host": host}
     )
 
 
@@ -92,7 +94,7 @@ async def go_previous(current_user: Annotated[UserInDB, Depends(get_current_user
 async def get_task(request: Request):
     return templates.TemplateResponse(
         "annotate.html",
-        {"request": request},
+        {"request": request, "host": host}
     )
 
 
@@ -115,7 +117,7 @@ async def login(response: Response, form_data: Annotated[OAuth2PasswordRequestFo
 async def logout(response: Response, request: Request):
     response = templates.TemplateResponse(
         "home.html",
-        {"request": request}
+        {"request": request, "host": host}
     )
     response.set_cookie(key='access-token', httponly=True, expires=0, max_age=0)
     return response
@@ -145,7 +147,7 @@ async def get_all_users(current_user: Annotated[User, Depends(get_current_user)]
     all_users.sort(key=lambda x: x['score'], reverse=True)
     return templates.TemplateResponse(
         "users.html",
-        {"request": request, 'current_user_id': current_user, 'users': all_users}
+        {"request": request, 'current_user_id': current_user, 'users': all_users, "host": host}
     )
 
 
