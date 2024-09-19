@@ -116,7 +116,7 @@ async function makeRequest(mode, host) {
     const formData = new FormData(document.getElementById(mode + 'Form'));
 
     try {
-        const response = await fetch(host + '/' + mode, {
+        const response = await fetch(host + mode, {
             method: 'POST',
             body: formData,
         });
