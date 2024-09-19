@@ -39,7 +39,7 @@
                     <td>
                         {% for badge_id in user.badges %}
                             <div id="{{ badge_id }}" class="hover">
-                                <img src="/badges/{{ badge_id }}.png" alt="Badge {{ badge_id }}"
+                                <img src="{{ host }}/badges/{{ badge_id }}.png" alt="Badge {{ badge_id }}"
                                      class="icone" onload="generateHover(this)"
                                 >
                                 <p class="hover-text">Ce badge reserve encore bien des mystères...</p>
