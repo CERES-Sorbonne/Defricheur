@@ -14,12 +14,12 @@ function open_modal(id, page) {
     }
 }
 
-function close_modal(id) {
+function close_modal(id, host = '/') {
     inModal = false;
     $(id).modal('hide');
     const newLocation = document.getElementById("newLocation").innerHTML;
     if (newLocation !== "undefined") {
-        gotoPage(newLocation, true, false);
+        gotoPage(newLocation, true, false, host);
     }
 }
 
@@ -135,7 +135,7 @@ async function makeRequest(mode, host) {
             // On supprime l' username du storage une fois que le token a expiré
             updateNavBar(jsonResponse.username)
             // Fermer la modale
-            close_modal('#' + mode + 'Modal')
+            close_modal('#' + mode + 'Modal', host);
         } else {
             const errorMessage = await response.json();
             if (mode === 'signup') {
