@@ -1,6 +1,7 @@
 let haveYouSeenTheCorrection = false;
 let dico = {}
 let changing = false;
+let host = window.location.href.slice(0,-8);
 
 function modifyPage(data) {
     document.querySelector('#seed_text').innerText = data.seed_text;
@@ -54,7 +55,7 @@ async function getData(order = null) {
         if (dico.tweetId) {
             body.tweet_id = dico.tweetId
         }
-        const response = await fetch('/data/', {
+        const response = await fetch(host + 'data/', {
             method: 'POST',
             credentials: 'include',
             body: JSON.stringify(body)

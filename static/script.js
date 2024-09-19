@@ -167,13 +167,13 @@ function updateNavBar(username) {
 }
 
 
-async function gotoPage(page, checkLogin = true, openModal = true, host = '') {
+async function gotoPage(page, checkLogin = true, openModal = true, host = '/') {
     if (checkLogin && !checkLoggedIn(page, openModal)) {
         return;
     }
     console.log('Redirection vers la page', page);
-    console.log(host + '/' + page);
-    window.location = host + '/' + page;
+    console.log(host + page);
+    window.location = host + page;
 }
 
 
