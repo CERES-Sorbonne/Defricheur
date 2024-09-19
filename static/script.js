@@ -4,6 +4,15 @@ let userName = null;
 let konamiCode = '';
 const secretCode = 'ArrowUpArrowUpArrowDownArrowDownArrowLeftArrowRightArrowLeftArrowRightba'; // Code Konami en ASCII
 
+let host = window.location.href.replace(
+    "annotate", ""
+).replace("home", ""
+).replace("informations", ""
+).replace("ranking", "")
+while (host.endsWith("/")) {
+    host = host.slice(0, -1)
+}
+
 function open_modal(id, page) {
     inModal = true;
     $(id).modal('show');
@@ -14,12 +23,12 @@ function open_modal(id, page) {
     }
 }
 
-function close_modal(id, host = '/') {
+function close_modal(id) {
     inModal = false;
     $(id).modal('hide');
     const newLocation = document.getElementById("newLocation").innerHTML;
     if (newLocation !== "undefined") {
-        gotoPage(newLocation, true, false, host);
+        gotoPage(newLocation, true, false);
     }
 }
 
@@ -112,7 +121,7 @@ function getUserName() {
     return user.name
 }
 
-async function makeRequest(mode, host) {
+async function makeRequest(mode) {
     const formData = new FormData(document.getElementById(mode + 'Form'));
 
     console.log('Envoi de la requête AJAX', mode, host);
@@ -135,7 +144,7 @@ async function makeRequest(mode, host) {
             // On supprime l' username du storage une fois que le token a expiré
             updateNavBar(jsonResponse.username)
             // Fermer la modale
-            close_modal('#' + mode + 'Modal', host);
+            close_modal('#' + mode + 'Modal');
         } else {
             const errorMessage = await response.json();
             if (mode === 'signup') {
@@ -167,7 +176,7 @@ function updateNavBar(username) {
 }
 
 
-async function gotoPage(page, checkLogin = true, openModal = true, host = '/') {
+async function gotoPage(page, checkLogin = true, openModal = true) {
     if (checkLogin && !checkLoggedIn(page, openModal)) {
         return;
     }
@@ -193,7 +202,7 @@ function showToast(id) {
                 <div class="toast-body">
                     Badge secret débloqué !
                     <br>
-                    <img src="/badges/${id}.gif" class="img-thumbnail" alt="Badge Image">
+                    <img src="${host}badges/${id}.gif" class="img-thumbnail" alt="Badge Image">
                 </div>
             </div>
         `;

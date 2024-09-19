@@ -58,7 +58,7 @@ async function getData(order = null) {
         if (dico.tweetId) {
             body.tweet_id = dico.tweetId
         }
-        const response = await fetch(host + '/data/', {
+        const response = await fetch(host + 'data/', {
             method: 'POST',
             credentials: 'include',
             body: JSON.stringify(body)
@@ -73,7 +73,7 @@ async function getData(order = null) {
     }
 }
 
-async function tuto_done(host = "/") {
+async function tuto_done() {
     try {
         const response = await fetch(host + 'isTutoDone/', {
             method: 'GET',
@@ -90,7 +90,7 @@ async function tuto_done(host = "/") {
 
 }
 
-async function onChange(order, host = "/") {
+async function onChange(order) {
     if (changing) {
         return;
     }
@@ -193,7 +193,7 @@ function displayToast(badgeName) {
                 <div class="toast-body">
                     Vous avez débloqué un nouveau badge!
                     <br>
-                    <img src="/badges/${badgeName}.png" class="img-thumbnail" alt="Badge Image">
+                    <img src="${host}badges/${badgeName}.png" class="img-thumbnail" alt="Badge Image">
                 </div>
             </div>
         `;
@@ -203,7 +203,7 @@ function displayToast(badgeName) {
 }
 
 document.addEventListener("DOMContentLoaded", async function () {
-        dico = await getData();
+        dico = await getData(host);
 
         if (dico.__type__ === "training" || dico.__type__ === "control") {
             await deal_with_training(true);
